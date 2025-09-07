@@ -1,0 +1,63 @@
+<div class="observer-demo">
+  <div class="demo-header">
+    <h2>👁️ Observer Pattern</h2>
+    <p>O Observer Pattern permite que objetos sejam notificados automaticamente sobre mudanças de estado.</p>
+  </div>
+  
+  <div class="demo-content">
+    <div class="input-section">
+      <h3>📰 Publicar Notícia</h3>
+      <div class="input-group">
+        <input 
+          type="text" 
+          [(ngModel)]="newNews" 
+          placeholder="Digite uma notícia..."
+          class="news-input"
+          (keyup.enter)="addNews()">
+        <button (click)="addNews()" class="btn-primary" [disabled]="!newNews.trim()">
+          Publicar
+        </button>
+      </div>
+    </div>
+    
+    <div class="observers-section">
+      <h3>👥 Observadores ({{ observers.length }})</h3>
+      <div class="observers-list">
+        <div *ngFor="let observer of observers; let i = index" class="observer-item">
+          <span class="observer-name">{{ observer.name }}</span>
+          <span class="observer-role">{{ getObserverRole(i) }}</span>
+        </div>
+      </div>
+      <button (click)="addObserver()" class="btn-secondary">+ Adicionar Observador</button>
+    </div>
+    
+    <div class="news-section">
+      <h3>📋 Feed de Notícias</h3>
+      <div class="news-list">
+        <div *ngFor="let newsItem of news; let i = index" class="news-item">
+          <span class="news-number">{{ i + 1 }}</span>
+          <span class="news-content">{{ newsItem }}</span>
+          <span class="news-time">{{ getCurrentTime() }}</span>
+        </div>
+        <div *ngIf="news.length === 0" class="empty-state">
+          Nenhuma notícia publicada ainda
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="explanation">
+    <h3>Como Funciona?</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>1. Subject:</strong> Mantém lista de observadores
+      </div>
+      <div class="step">
+        <strong>2. Observer:</strong> Recebe notificações de mudanças
+      </div>
+      <div class="step">
+        <strong>3. Notificação:</strong> Todos são avisados automaticamente
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<header class="header">
+  <div class="header__container">
+    <div class="header__brand">
+      <h1 class="header__title">Design Patterns Angular</h1>
+    </div>
+    
+    <nav class="header__nav">
+      <ul class="header__nav-list">
+        <li class="header__nav-item" *ngFor="let item of menuItems">
+          <a 
+            [routerLink]="item.isImplemented ? item.route : null" 
+            [class]="'header__nav-link' + (item.isImplemented ? '' : ' header__nav-link--disabled')"
+            [routerLinkActive]="item.isImplemented ? 'active' : ''"
+            [routerLinkActiveOptions]="{exact: false}"
+            [attr.aria-disabled]="!item.isImplemented"
+            [title]="item.isImplemented ? item.description : 'Em desenvolvimento'">
+            <span class="header__nav-icon">{{ getPatternIcon(item.id) }}</span>
+            {{ item.title }}
+            <span *ngIf="!item.isImplemented" class="header__nav-badge">Em breve</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="header__menu-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+      <span class="header__hamburger"></span>
+      <span class="header__hamburger"></span>
+      <span class="header__hamburger"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="header__mobile-menu" [class.active]="isMobileMenuOpen">
+    <nav class="header__mobile-nav">
+      <ul class="header__mobile-nav-list">
+        <li class="header__mobile-nav-item" *ngFor="let item of menuItems">
+          <a 
+            [routerLink]="item.isImplemented ? item.route : null" 
+            [class]="'header__mobile-nav-link' + (item.isImplemented ? '' : ' header__mobile-nav-link--disabled')"
+            [routerLinkActive]="item.isImplemented ? 'active' : ''"
+            [routerLinkActiveOptions]="{exact: false}"
+            [attr.aria-disabled]="!item.isImplemented"
+            (click)="item.isImplemented ? closeMobileMenu() : null">
+            <span class="header__mobile-nav-icon">{{ getPatternIcon(item.id) }}</span>
+            <div class="header__mobile-nav-content">
+              <span class="header__mobile-nav-title">
+                {{ item.title }}
+                <span *ngIf="!item.isImplemented" class="header__mobile-nav-badge">Em breve</span>
+              </span>
+              <span class="header__mobile-nav-desc">{{ item.description }}</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

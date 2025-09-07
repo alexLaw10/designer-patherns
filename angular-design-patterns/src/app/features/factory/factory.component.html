@@ -1,0 +1,120 @@
+<div class="factory-demo">
+  <div class="demo-header">
+    <h2>🏭 Factory Pattern</h2>
+    <p>O Factory Pattern permite criar objetos sem especificar suas classes concretas.</p>
+  </div>
+  
+  <div class="demo-content">
+    <div class="creator-section">
+      <h3>🔨 Criar Veículo</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tipo:</label>
+          <select [(ngModel)]="vehicleType" class="form-select">
+            <option *ngFor="let type of availableTypes" [value]="type">
+              {{ getVehicleTypeIcon(type) }} {{ type | titlecase }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Marca:</label>
+          <input type="text" [(ngModel)]="brand" placeholder="Ex: Toyota" class="form-input">
+        </div>
+        
+        <div class="form-group">
+          <label>Modelo:</label>
+          <input type="text" [(ngModel)]="model" placeholder="Ex: Corolla" class="form-input">
+        </div>
+        
+        <div class="form-group">
+          <label>Ano:</label>
+          <input type="number" [(ngModel)]="year" [min]="1900" [max]="currentYear" class="form-input">
+        </div>
+      </div>
+      
+      <button (click)="createVehicle()" class="btn-primary" [disabled]="!isFormValid()">
+        🔨 Criar Veículo
+      </button>
+    </div>
+    
+    <div class="vehicles-section">
+      <h3>🚗 Veículos Criados ({{ createdVehicles.length }})</h3>
+      <div class="vehicles-list">
+        <div *ngFor="let vehicle of createdVehicles; let i = index" 
+             class="vehicle-item"
+             [class.selected]="selectedVehicle === vehicle"
+             (click)="selectVehicle(vehicle)">
+          
+          <div class="vehicle-header">
+            <span class="vehicle-icon">{{ getVehicleTypeIcon(vehicle.constructor.name.toLowerCase()) }}</span>
+            <span class="vehicle-type">{{ vehicle.constructor.name }}</span>
+          </div>
+          
+          <div class="vehicle-info">
+            <div class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</div>
+            <div class="vehicle-specs">
+              <span>Ano: {{ vehicle.year }}</span>
+              <span>Tipo: {{ vehicle.constructor.name }}</span>
+            </div>
+          </div>
+          
+          <div class="vehicle-actions">
+            <button (click)="removeVehicle(i); $event.stopPropagation()" class="btn-danger">
+              🗑️
+            </button>
+          </div>
+        </div>
+        
+        <div *ngIf="createdVehicles.length === 0" class="empty-state">
+          Nenhum veículo criado ainda
+        </div>
+      </div>
+    </div>
+    
+    <div class="controls-section" *ngIf="selectedVehicle">
+      <h3>🎮 Controles</h3>
+      <div class="control-panel">
+        <div class="selected-info">
+          <span class="selected-icon">{{ getVehicleTypeIcon(selectedVehicle.constructor.name.toLowerCase()) }}</span>
+          <span class="selected-name">{{ selectedVehicle.getInfo() }}</span>
+        </div>
+        <div class="control-buttons">
+          <button (click)="startVehicle()" class="btn-success">▶️ Ligar</button>
+          <button (click)="stopVehicle()" class="btn-warning">⏹️ Desligar</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="log-section">
+      <h3>📋 Log de Ações</h3>
+      <div class="log-controls">
+        <button (click)="clearLog()" class="btn-secondary">🗑️ Limpar</button>
+      </div>
+      <div class="log-list">
+        <div *ngFor="let log of actionLog" class="log-item">
+          <span class="log-time">{{ getCurrentTime() }}</span>
+          <span class="log-message">{{ log }}</span>
+        </div>
+        <div *ngIf="actionLog.length === 0" class="empty-state">
+          Nenhuma ação registrada
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="explanation">
+    <h3>Como Funciona?</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>1. Interface:</strong> Todos os veículos implementam Vehicle
+      </div>
+      <div class="step">
+        <strong>2. Factory:</strong> Decide qual classe instanciar baseado no tipo
+      </div>
+      <div class="step">
+        <strong>3. Criação:</strong> Cliente não precisa conhecer classes concretas
+      </div>
+    </div>
+  </div>
+</div>
