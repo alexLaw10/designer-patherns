@@ -25,9 +25,9 @@ export class MenuComponent implements OnInit {
     {
       id: 'singleton',
       title: 'Singleton',
-      description: 'Realizando estudos de casos para demonstração e implementação',
-      route: '#',
-      isImplemented: false
+      description: 'Padrão que garante uma única instância de uma classe',
+      route: '/patterns/singleton',
+      isImplemented: true
     },
     {
       id: 'strategy',

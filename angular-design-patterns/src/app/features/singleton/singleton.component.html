@@ -1,0 +1,379 @@
+<div class="singleton-demo">
+  <div class="demo-header">
+    <h2>🔒 Singleton Pattern</h2>
+    <p>O Singleton Pattern garante que uma classe tenha apenas uma instância e fornece um ponto global de acesso a ela.</p>
+  </div>
+  
+  <div class="demo-content">
+    <div class="instance-info">
+      <h3>🏷️ Informações da Instância</h3>
+      <div class="info-card">
+        <div class="info-item">
+          <span class="info-label">ID da Instância:</span>
+          <span class="info-value">{{ instanceId }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Total de Logs:</span>
+          <span class="info-value">{{ totalLogs }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Status:</span>
+          <span class="info-value status-active">Ativo</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="log-creator">
+      <h3>📝 Criar Log</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nível do Log:</label>
+          <select [(ngModel)]="selectedLevel" class="form-select">
+            <option *ngFor="let level of getLogLevels()" [value]="level">
+              {{ getLogLevelIcon(level) }} {{ getLogLevelName(level) }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Fonte (opcional):</label>
+          <input type="text" [(ngModel)]="newSource" placeholder="Ex: AuthService" class="form-input">
+        </div>
+        
+        <div class="form-group full-width">
+          <label>Mensagem:</label>
+          <input type="text" [(ngModel)]="newMessage" placeholder="Digite sua mensagem..." class="form-input" (keyup.enter)="addLog()">
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button (click)="addLog()" class="btn-primary" [disabled]="!newMessage.trim()">
+          ➕ Adicionar Log
+        </button>
+        <button (click)="addSampleLogs()" class="btn-secondary">
+          🎯 Logs de Exemplo
+        </button>
+        <button (click)="addRandomLog()" class="btn-info">
+          🎲 Log Aleatório
+        </button>
+      </div>
+    </div>
+    
+    <div class="logs-section">
+      <h3>📋 Logs Registrados</h3>
+      <div class="logs-controls">
+        <button (click)="clearLogs()" class="btn-danger">
+          🗑️ Limpar Logs
+        </button>
+        <button (click)="exportLogs()" class="btn-success">
+          💾 Exportar JSON
+        </button>
+      </div>
+      
+      <div class="logs-stats">
+        <div class="stat-item" *ngFor="let level of getLogLevels()">
+          <span class="stat-icon">{{ getLogLevelIcon(level) }}</span>
+          <span class="stat-label">{{ getLogLevelName(level) }}:</span>
+          <span class="stat-value">{{ logsByLevel[level] }}</span>
+        </div>
+      </div>
+      
+      <div class="logs-list">
+        <div *ngFor="let log of logs; let i = index" 
+             class="log-item" 
+             [style.border-left-color]="getLogLevelColor(log.level)">
+          <div class="log-header">
+            <span class="log-icon">{{ getLogLevelIcon(log.level) }}</span>
+            <span class="log-level">{{ log.level }}</span>
+            <span class="log-time">{{ log.timestamp | date:'HH:mm:ss.SSS' }}</span>
+            <span class="log-source" *ngIf="log.source">[{{ log.source }}]</span>
+          </div>
+          <div class="log-message">{{ log.message }}</div>
+          <div class="log-data" *ngIf="log.data">
+            <pre>{{ log.data | json }}</pre>
+          </div>
+        </div>
+        
+        <div *ngIf="logs.length === 0" class="empty-logs">
+          <span class="empty-icon">📝</span>
+          <p>Nenhum log registrado ainda</p>
+          <small>Crie um log usando o formulário acima</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="explanation">
+    <h3>🔍 Contexto Completo do Singleton Pattern</h3>
+    <div class="explanation-content">
+      <div class="concept">
+        <h4>📚 Conceito e Origem</h4>
+        <p>O Singleton Pattern é um padrão criacional fundamental da Gang of Four (GoF) que garante que uma classe tenha apenas uma instância e fornece um ponto global de acesso a essa instância. No Angular, os serviços com <code>providedIn: 'root'</code> são singletons por padrão.</p>
+        <p><strong>Histórico:</strong> Também criado em 1994 pelos mesmos autores dos outros padrões GoF. É um dos padrões mais controversos, sendo muito útil quando usado corretamente, mas considerado um "anti-pattern" quando mal aplicado.</p>
+        <p><strong>Problema que resolve:</strong> Como garantir que uma classe tenha apenas uma instância? Como controlar o acesso global a recursos compartilhados? Como evitar a criação desnecessária de objetos caros?</p>
+      </div>
+      
+      <div class="real-world-examples">
+        <h4>🌍 Exemplos do Mundo Real</h4>
+        <div class="examples-grid">
+          <div class="example-card">
+            <h5>🔧 Sistemas de Configuração</h5>
+            <ul>
+              <li><strong>Configurações de App:</strong> Settings, environment variables</li>
+              <li><strong>Database Config:</strong> Connection strings, credentials</li>
+              <li><strong>Feature Flags:</strong> A/B testing, feature toggles</li>
+              <li><strong>API Keys:</strong> Third-party service credentials</li>
+            </ul>
+          </div>
+          <div class="example-card">
+            <h5>📊 Sistemas de Logging</h5>
+            <ul>
+              <li><strong>Application Logs:</strong> Centralized logging</li>
+              <li><strong>Error Tracking:</strong> Sentry, Bugsnag</li>
+              <li><strong>Analytics:</strong> Google Analytics, Mixpanel</li>
+              <li><strong>Audit Trails:</strong> Security logs, compliance</li>
+            </ul>
+          </div>
+          <div class="example-card">
+            <h5>🗄️ Gerenciamento de Recursos</h5>
+            <ul>
+              <li><strong>Database Connections:</strong> Connection pooling</li>
+              <li><strong>Cache Systems:</strong> Redis, Memcached</li>
+              <li><strong>Thread Pools:</strong> Executor services</li>
+              <li><strong>File Systems:</strong> File watchers, monitors</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="components">
+        <h4>🧩 Componentes</h4>
+        <div class="component-list">
+          <div class="component">
+            <strong>Singleton Class:</strong>
+            <ul>
+              <li>Construtor privado para evitar instanciação externa</li>
+              <li>Método estático para obter a instância única</li>
+              <li>Variável estática para armazenar a instância</li>
+            </ul>
+          </div>
+          <div class="component">
+            <strong>Angular DI (Dependency Injection):</strong>
+            <ul>
+              <li>Serviços com <code>providedIn: 'root'</code> são singletons</li>
+              <li>Angular gerencia o ciclo de vida automaticamente</li>
+              <li>Injeção de dependência em toda a aplicação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flow">
+        <h4>🔄 Fluxo de Funcionamento</h4>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <strong>Criação:</strong> Angular cria a instância única do serviço
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <strong>Registro:</strong> Serviço é registrado no sistema de DI
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <strong>Injeção:</strong> Mesma instância é injetada em todos os componentes
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <strong>Reutilização:</strong> Estado é compartilhado entre todos os consumidores
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="benefits">
+        <h4>✅ Vantagens</h4>
+        <ul>
+          <li><strong>Instância única:</strong> Garante apenas uma instância em toda a aplicação</li>
+          <li><strong>Acesso global:</strong> Ponto centralizado de acesso</li>
+          <li><strong>Economia de recursos:</strong> Evita criação desnecessária de objetos</li>
+          <li><strong>Estado compartilhado:</strong> Dados compartilhados entre componentes</li>
+          <li><strong>Controle de acesso:</strong> Controle sobre quando a instância é criada</li>
+        </ul>
+      </div>
+      
+      <div class="use-cases">
+        <h4>🎯 Casos de Uso Detalhados</h4>
+        <div class="use-cases-grid">
+          <div class="use-case">
+            <h5>📊 Logging e Monitoramento</h5>
+            <p>Sistema centralizado para logs, métricas e monitoramento da aplicação.</p>
+            <ul>
+              <li>Application logs</li>
+              <li>Error tracking</li>
+              <li>Performance metrics</li>
+              <li>User analytics</li>
+            </ul>
+          </div>
+          <div class="use-case">
+            <h5>⚙️ Configuração Global</h5>
+            <p>Gerenciamento centralizado de configurações e settings da aplicação.</p>
+            <ul>
+              <li>Environment variables</li>
+              <li>Feature flags</li>
+              <li>API endpoints</li>
+              <li>Security settings</li>
+            </ul>
+          </div>
+          <div class="use-case">
+            <h5>💾 Cache e Estado</h5>
+            <p>Gerenciamento de cache e estado compartilhado entre componentes.</p>
+            <ul>
+              <li>In-memory cache</li>
+              <li>Session storage</li>
+              <li>Global state</li>
+              <li>Data persistence</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="angular-specific">
+        <h4>⚡ Singleton Pattern no Angular</h4>
+        <div class="angular-examples">
+          <div class="angular-example">
+            <h5>🏗️ Dependency Injection</h5>
+            <p>O Angular implementa Singleton através do sistema de DI:</p>
+            <ul>
+              <li><strong>providedIn: 'root':</strong> Singleton em toda a aplicação</li>
+              <li><strong>providedIn: 'platform':</strong> Singleton entre aplicações</li>
+              <li><strong>providedIn: 'any':</strong> Singleton por módulo</li>
+              <li><strong>Custom Providers:</strong> useFactory, useClass</li>
+            </ul>
+          </div>
+          <div class="angular-example">
+            <h5>🎯 Service Lifecycle</h5>
+            <p>Gerenciamento automático do ciclo de vida dos serviços:</p>
+            <ul>
+              <li>Criação lazy (on-demand)</li>
+              <li>Destruição automática</li>
+              <li>Memory management</li>
+              <li>Tree shaking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="anti-patterns">
+        <h4>⚠️ Quando NÃO Usar Singleton</h4>
+        <div class="anti-patterns-grid">
+          <div class="anti-pattern">
+            <h5>❌ Problemas Comuns</h5>
+            <ul>
+              <li><strong>Global State:</strong> Pode causar acoplamento</li>
+              <li><strong>Testing:</strong> Dificulta testes unitários</li>
+              <li><strong>Concurrency:</strong> Problemas em ambientes multi-thread</li>
+              <li><strong>Memory Leaks:</strong> Instâncias podem não ser liberadas</li>
+            </ul>
+          </div>
+          <div class="anti-pattern">
+            <h5>🔄 Alternativas</h5>
+            <ul>
+              <li><strong>Dependency Injection:</strong> Para injeção de dependências</li>
+              <li><strong>Factory Pattern:</strong> Para criação de objetos</li>
+              <li><strong>Service Locator:</strong> Para localização de serviços</li>
+              <li><strong>Module Pattern:</strong> Para namespacing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="best-practices">
+        <h4>✅ Melhores Práticas</h4>
+        <div class="practices-grid">
+          <div class="practice">
+            <h5>🎯 Design</h5>
+            <ul>
+              <li>Use apenas quando realmente necessário</li>
+              <li>Implemente thread-safety se necessário</li>
+              <li>Considere lazy initialization</li>
+              <li>Documente claramente o propósito</li>
+            </ul>
+          </div>
+          <div class="practice">
+            <h5>🧪 Testing</h5>
+            <ul>
+              <li>Reset singleton entre testes</li>
+              <li>Use mocks quando apropriado</li>
+              <li>Teste cenários de concorrência</li>
+              <li>Verifique memory leaks</li>
+            </ul>
+          </div>
+          <div class="practice">
+            <h5>⚡ Performance</h5>
+            <ul>
+              <li>Considere lazy loading</li>
+              <li>Monitore uso de memória</li>
+              <li>Implemente cleanup apropriado</li>
+              <li>Use weak references quando possível</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="alternatives">
+        <h4>🔄 Alternativas e Padrões Relacionados</h4>
+        <div class="alternatives-grid">
+          <div class="alternative">
+            <h5>💉 Dependency Injection</h5>
+            <p>Para injeção automática de dependências em vez de acesso global.</p>
+          </div>
+          <div class="alternative">
+            <h5>🏭 Factory Pattern</h5>
+            <p>Para criação controlada de objetos em vez de instância única.</p>
+          </div>
+          <div class="alternative">
+            <h5>🎯 Service Locator</h5>
+            <p>Para localização de serviços sem acoplamento direto.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Exemplo de Código</h4>
+        <div class="code-block">
+          <pre><code>// Serviço Singleton no Angular
+@Injectable({{ '{' }}
+  providedIn: 'root' // Garante que seja singleton
+{{ '}' }})
+export class LoggerService {{ '{' }}
+  private static instance: LoggerService | null = null;
+  
+  private constructor() {{ '{' }}
+    // Construtor privado
+  {{ '}' }}
+  
+  public static getInstance(): LoggerService {{ '{' }}
+    if (!LoggerService.instance) {{ '{' }}
+      LoggerService.instance = new LoggerService();
+    {{ '}' }}
+    return LoggerService.instance;
+  {{ '}' }}
+{{ '}' }}
+
+// Uso em componentes
+constructor(private logger: LoggerService) {{ '{' }}
+  // Mesma instância em toda a aplicação
+{{ '}' }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

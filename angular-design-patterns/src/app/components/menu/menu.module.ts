@@ -19,10 +19,14 @@ const routes: Routes = [
         path: 'observer',
         loadChildren: () => import('../../features/observer/observer.module').then(m => m.ObserverModule)
       },
-      {
-        path: 'factory',
-        loadChildren: () => import('../../features/factory/factory.module').then(m => m.FactoryModule)
-      }
+                  {
+                    path: 'factory',
+                    loadChildren: () => import('../../features/factory/factory.module').then(m => m.FactoryModule)
+                  },
+                  {
+                    path: 'singleton',
+                    loadChildren: () => import('../../features/singleton/singleton.module').then(m => m.SingletonModule)
+                  }
     ]
   }
 ];

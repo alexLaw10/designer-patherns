@@ -1,4 +1,6 @@
 
+.observer-demo {
+  
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
@@ -18,6 +20,7 @@
   color: #333;
   margin: 0 0 10px 0;
   font-size: 1.8rem;
+  
 }
 
 .demo-header p {
@@ -188,31 +191,243 @@
 
 .explanation {
   background: #f8f9fa;
-  padding: 20px;
+  padding: 25px;
   border-radius: 8px;
   border-left: 4px solid #6f42c1;
+  margin-top: 20px;
 }
 
 .explanation h3 {
-  margin: 0 0 15px 0;
+  margin: 0 0 20px 0;
   color: #333;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  text-align: center;
 }
 
-.steps {
+.explanation-content {
   display: grid;
-  gap: 10px;
+  gap: 25px;
 }
 
-.step {
-  padding: 10px;
+.concept,
+.components,
+.flow,
+.benefits,
+.use-cases {
   background: white;
-  border-radius: 4px;
+  padding: 20px;
+  border-radius: 6px;
   border: 1px solid #e9ecef;
+}
+
+.concept h4,
+.components h4,
+.flow h4,
+.benefits h4,
+.use-cases h4 {
+  margin: 0 0 15px 0;
+  color: #6f42c1;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.concept p {
+  margin: 0;
+  line-height: 1.6;
+  color: #555;
+}
+
+.component-list {
+  display: grid;
+  gap: 15px;
+}
+
+.component {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid #6f42c1;
+}
+
+.component strong {
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.component ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.component li {
+  margin-bottom: 5px;
+  color: #555;
   font-size: 14px;
 }
 
-.step strong {
+.flow-steps {
+  display: grid;
+  gap: 15px;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #28a745;
+}
+
+.step-number {
+  background: #28a745;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content strong {
+  color: #28a745;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.benefits ul,
+.use-cases ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.benefits li,
+.use-cases li {
+  margin-bottom: 8px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.benefits strong,
+.use-cases strong {
+  color: #28a745;
+}
+
+.real-world-examples,
+.angular-specific,
+.best-practices,
+.alternatives {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.real-world-examples h4,
+.angular-specific h4,
+.best-practices h4,
+.alternatives h4 {
+  margin: 0 0 15px 0;
+  color: #6f42c1;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.examples-grid,
+.use-cases-grid,
+.angular-examples,
+.practices-grid,
+.alternatives-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.examples-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.use-cases-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.angular-examples {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.practices-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.alternatives-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.example-card,
+.use-case,
+.angular-example,
+.practice,
+.alternative {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #6f42c1;
+}
+
+.example-card h5,
+.use-case h5,
+.angular-example h5,
+.practice h5,
+.alternative h5 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.example-card p,
+.use-case p,
+.angular-example p,
+.alternative p {
+  margin: 0 0 10px 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.example-card ul,
+.use-case ul,
+.angular-example ul,
+.practice ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.example-card li,
+.use-case li,
+.angular-example li,
+.practice li {
+  margin-bottom: 5px;
+  color: #555;
+  font-size: 14px;
+}
+
+.example-card strong,
+.use-case strong,
+.angular-example strong,
+.practice strong {
   color: #6f42c1;
 }
 

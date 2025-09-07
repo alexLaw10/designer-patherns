@@ -8,27 +8,27 @@
     <div class="creator-section">
       <h3>🔨 Criar Veículo</h3>
       <div class="form-grid">
-        <div class="form-group">
+    <div class="form-group">
           <label>Tipo:</label>
           <select [(ngModel)]="vehicleType" class="form-select">
-            <option *ngFor="let type of availableTypes" [value]="type">
+        <option *ngFor="let type of availableTypes" [value]="type">
               {{ getVehicleTypeIcon(type) }} {{ type | titlecase }}
-            </option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Marca:</label>
+        </option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Marca:</label>
           <input type="text" [(ngModel)]="brand" placeholder="Ex: Toyota" class="form-input">
-        </div>
-        
-        <div class="form-group">
-          <label>Modelo:</label>
+    </div>
+    
+    <div class="form-group">
+      <label>Modelo:</label>
           <input type="text" [(ngModel)]="model" placeholder="Ex: Corolla" class="form-input">
-        </div>
-        
-        <div class="form-group">
-          <label>Ano:</label>
+    </div>
+    
+    <div class="form-group">
+      <label>Ano:</label>
           <input type="number" [(ngModel)]="year" [min]="1900" [max]="currentYear" class="form-input">
         </div>
       </div>
@@ -40,18 +40,18 @@
     
     <div class="vehicles-section">
       <h3>🚗 Veículos Criados ({{ createdVehicles.length }})</h3>
-      <div class="vehicles-list">
-        <div *ngFor="let vehicle of createdVehicles; let i = index" 
-             class="vehicle-item"
-             [class.selected]="selectedVehicle === vehicle"
-             (click)="selectVehicle(vehicle)">
+    <div class="vehicles-list">
+      <div *ngFor="let vehicle of createdVehicles; let i = index" 
+           class="vehicle-item"
+           [class.selected]="selectedVehicle === vehicle"
+           (click)="selectVehicle(vehicle)">
           
           <div class="vehicle-header">
             <span class="vehicle-icon">{{ getVehicleTypeIcon(vehicle.constructor.name.toLowerCase()) }}</span>
             <span class="vehicle-type">{{ vehicle.constructor.name }}</span>
           </div>
           
-          <div class="vehicle-info">
+        <div class="vehicle-info">
             <div class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</div>
             <div class="vehicle-specs">
               <span>Ano: {{ vehicle.year }}</span>
@@ -67,11 +67,11 @@
         </div>
         
         <div *ngIf="createdVehicles.length === 0" class="empty-state">
-          Nenhum veículo criado ainda
-        </div>
+        Nenhum veículo criado ainda
       </div>
     </div>
-    
+  </div>
+
     <div class="controls-section" *ngIf="selectedVehicle">
       <h3>🎮 Controles</h3>
       <div class="control-panel">
@@ -102,18 +102,291 @@
       </div>
     </div>
   </div>
-  
+
   <div class="explanation">
-    <h3>Como Funciona?</h3>
-    <div class="steps">
-      <div class="step">
-        <strong>1. Interface:</strong> Todos os veículos implementam Vehicle
+    <h3>🔍 Contexto Completo do Factory Pattern</h3>
+    <div class="explanation-content">
+      <div class="concept">
+        <h4>📚 Conceito e Origem</h4>
+        <p>O Factory Pattern é um padrão criacional fundamental da Gang of Four (GoF) que fornece uma interface para criar objetos sem especificar suas classes concretas. A factory decide qual classe instanciar baseado em parâmetros fornecidos.</p>
+        <p><strong>Histórico:</strong> Também criado em 1994 pelos mesmos autores do Observer Pattern. É um dos padrões mais utilizados em frameworks e bibliotecas modernas, especialmente em sistemas de injeção de dependência.</p>
+        <p><strong>Problema que resolve:</strong> Como criar objetos sem acoplar o código às classes concretas? Como centralizar a lógica de criação de objetos? Como facilitar a adição de novos tipos de objetos?</p>
       </div>
-      <div class="step">
-        <strong>2. Factory:</strong> Decide qual classe instanciar baseado no tipo
+      
+      <div class="real-world-examples">
+        <h4>🌍 Exemplos do Mundo Real</h4>
+        <div class="examples-grid">
+          <div class="example-card">
+            <h5>🏭 Frameworks de UI</h5>
+            <ul>
+              <li><strong>Angular:</strong> ComponentFactoryResolver</li>
+              <li><strong>React:</strong> createElement, createFactory</li>
+              <li><strong>Vue:</strong> createComponent, h() function</li>
+              <li><strong>Flutter:</strong> Widget factories</li>
+            </ul>
+          </div>
+          <div class="example-card">
+            <h5>🗄️ Bancos de Dados</h5>
+            <ul>
+              <li><strong>ORM:</strong> Entity factories</li>
+              <li><strong>Migrations:</strong> Schema factories</li>
+              <li><strong>Seeds:</strong> Data factories</li>
+              <li><strong>Connections:</strong> Database factories</li>
+            </ul>
+          </div>
+          <div class="example-card">
+            <h5>🌐 APIs e Integrações</h5>
+            <ul>
+              <li><strong>HTTP Clients:</strong> Request factories</li>
+              <li><strong>WebSockets:</strong> Connection factories</li>
+              <li><strong>Payment Gateways:</strong> Processor factories</li>
+              <li><strong>Email Services:</strong> Provider factories</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="step">
-        <strong>3. Criação:</strong> Cliente não precisa conhecer classes concretas
+      
+      <div class="components">
+        <h4>🧩 Componentes</h4>
+        <div class="component-list">
+          <div class="component">
+            <strong>Product Interface:</strong>
+            <ul>
+              <li>Define a interface comum para todos os produtos</li>
+              <li>Especifica os métodos que todos os produtos devem implementar</li>
+              <li>Permite tratar diferentes produtos de forma uniforme</li>
+            </ul>
+          </div>
+          <div class="component">
+            <strong>Concrete Products:</strong>
+            <ul>
+              <li>Implementações específicas da interface Product</li>
+              <li>Cada produto tem suas próprias características</li>
+              <li>Exemplos: Car, Motorcycle, Truck</li>
+            </ul>
+          </div>
+          <div class="component">
+            <strong>Factory:</strong>
+            <ul>
+              <li>Contém a lógica para decidir qual produto criar</li>
+              <li>Encapsula a criação de objetos</li>
+              <li>Retorna a interface comum, não a implementação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flow">
+        <h4>🔄 Fluxo de Funcionamento</h4>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <strong>Solicitação:</strong> Cliente solicita um produto via Factory
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <strong>Decisão:</strong> Factory analisa os parâmetros fornecidos
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <strong>Criação:</strong> Factory instancia a classe apropriada
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <strong>Retorno:</strong> Cliente recebe o objeto via interface comum
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="benefits">
+        <h4>✅ Vantagens</h4>
+        <ul>
+          <li><strong>Encapsulamento:</strong> Lógica de criação centralizada</li>
+          <li><strong>Flexibilidade:</strong> Fácil adicionar novos tipos de produtos</li>
+          <li><strong>Acoplamento baixo:</strong> Cliente não depende de classes concretas</li>
+          <li><strong>Reutilização:</strong> Factory pode ser reutilizada em diferentes contextos</li>
+          <li><strong>Manutenibilidade:</strong> Mudanças na criação ficam isoladas</li>
+        </ul>
+      </div>
+      
+      <div class="use-cases">
+        <h4>🎯 Casos de Uso Detalhados</h4>
+        <div class="use-cases-grid">
+          <div class="use-case">
+            <h5>🏭 Frameworks de UI</h5>
+            <p>Criação dinâmica de componentes baseada em configuração ou tipo.</p>
+            <ul>
+              <li>Formulários dinâmicos</li>
+              <li>Dashboards configuráveis</li>
+              <li>Componentes de tabela</li>
+              <li>Widgets personalizados</li>
+            </ul>
+          </div>
+          <div class="use-case">
+            <h5>🗄️ Conectores de Banco</h5>
+            <p>Diferentes drivers e conectores para diferentes SGBDs.</p>
+            <ul>
+              <li>MySQL, PostgreSQL, Oracle</li>
+              <li>MongoDB, Redis, Cassandra</li>
+              <li>Connection pooling</li>
+              <li>Query builders</li>
+            </ul>
+          </div>
+          <div class="use-case">
+            <h5>💳 Processadores de Pagamento</h5>
+            <p>Diferentes gateways e métodos de pagamento.</p>
+            <ul>
+              <li>Stripe, PayPal, PagSeguro</li>
+              <li>Cartão, PIX, Boleto</li>
+              <li>Fraud detection</li>
+              <li>Webhook handlers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="angular-specific">
+        <h4>⚡ Factory Pattern no Angular</h4>
+        <div class="angular-examples">
+          <div class="angular-example">
+            <h5>🏗️ Dependency Injection</h5>
+            <p>O Angular usa extensivamente o Factory Pattern através do sistema de DI:</p>
+            <ul>
+              <li><strong>Providers:</strong> useFactory para criação customizada</li>
+              <li><strong>Services:</strong> Criação baseada em configuração</li>
+              <li><strong>Components:</strong> Dynamic component creation</li>
+              <li><strong>Guards:</strong> Route guards factory</li>
+            </ul>
+          </div>
+          <div class="angular-example">
+            <h5>🎯 Component Factory</h5>
+            <p>ComponentFactoryResolver para criação dinâmica de componentes:</p>
+            <ul>
+              <li>Modal dialogs dinâmicos</li>
+              <li>Formulários baseados em schema</li>
+              <li>Widgets configuráveis</li>
+              <li>Plugin systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="variations">
+        <h4>🔄 Variações do Factory Pattern</h4>
+        <div class="variations-grid">
+          <div class="variation">
+            <h5>🏭 Simple Factory</h5>
+            <p>Factory simples com um método estático que retorna objetos baseado em parâmetros.</p>
+            <ul>
+              <li>Mais simples de implementar</li>
+              <li>Ideal para casos básicos</li>
+              <li>Menos flexível</li>
+            </ul>
+          </div>
+          <div class="variation">
+            <h5>🏗️ Factory Method</h5>
+            <p>Classe abstrata com método factory abstrato, delegando criação para subclasses.</p>
+            <ul>
+              <li>Mais flexível</li>
+              <li>Extensível via herança</li>
+              <li>Ideal para famílias de produtos</li>
+            </ul>
+          </div>
+          <div class="variation">
+            <h5>🏭 Abstract Factory</h5>
+            <p>Factory de factories, criando famílias de objetos relacionados.</p>
+            <ul>
+              <li>Máxima flexibilidade</li>
+              <li>Famílias de produtos</li>
+              <li>Mais complexo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="best-practices">
+        <h4>✅ Melhores Práticas</h4>
+        <div class="practices-grid">
+          <div class="practice">
+            <h5>🎯 Design</h5>
+            <ul>
+              <li>Use interfaces para desacoplar factory e produtos</li>
+              <li>Implemente validação de parâmetros</li>
+              <li>Considere usar enums para tipos</li>
+              <li>Documente claramente os tipos suportados</li>
+            </ul>
+          </div>
+          <div class="practice">
+            <h5>⚡ Performance</h5>
+            <ul>
+              <li>Considere caching de instâncias</li>
+              <li>Use lazy loading quando apropriado</li>
+              <li>Implemente pooling para objetos caros</li>
+              <li>Monitore uso de memória</li>
+            </ul>
+          </div>
+          <div class="practice">
+            <h5>🐛 Error Handling</h5>
+            <ul>
+              <li>Valide parâmetros de entrada</li>
+              <li>Forneça mensagens de erro claras</li>
+              <li>Implemente fallbacks quando possível</li>
+              <li>Use logging para debugging</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="alternatives">
+        <h4>🔄 Alternativas e Padrões Relacionados</h4>
+        <div class="alternatives-grid">
+          <div class="alternative">
+            <h5>🏗️ Builder Pattern</h5>
+            <p>Para criação de objetos complexos com muitos parâmetros opcionais.</p>
+          </div>
+          <div class="alternative">
+            <h5>🎯 Prototype Pattern</h5>
+            <p>Para clonagem de objetos existentes em vez de criação do zero.</p>
+          </div>
+          <div class="alternative">
+            <h5>💉 Dependency Injection</h5>
+            <p>Para injeção automática de dependências em vez de criação manual.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Exemplo de Código</h4>
+        <div class="code-block">
+          <pre><code>// Interface comum
+interface Vehicle {{ '{' }}
+  start(): string;
+  stop(): string;
+{{ '}' }}
+
+// Factory
+class VehicleFactory {{ '{' }}
+  static createVehicle(type: string, brand: string, model: string, year: number): Vehicle {{ '{' }}
+    switch(type) {{ '{' }}
+      case 'car': return new Car(brand, model, year);
+      case 'motorcycle': return new Motorcycle(brand, model, year);
+      case 'truck': return new Truck(brand, model, year);
+      default: throw new Error('Tipo não suportado');
+    {{ '}' }}
+  {{ '}' }}
+{{ '}' }}
+
+// Uso
+const vehicle = VehicleFactory.createVehicle('car', 'Toyota', 'Corolla', 2023);</code></pre>
+    </div>
       </div>
     </div>
   </div>
