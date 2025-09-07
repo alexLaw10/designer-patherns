@@ -33,6 +33,76 @@ Este projeto foi desenvolvido para analisar e demonstrar como os Design Patterns
 - **Implementação:** Sistema de personalização de café
 - **Angular:** @Component, @Injectable, HTTP Interceptors, Directives
 
+## 🎨 Diagrama dos Design Patterns
+
+```mermaid
+graph TB
+    subgraph "🏭 Factory Pattern"
+        F1[VehicleFactory] --> F2[Car]
+        F1 --> F3[Motorcycle]
+        F1 --> F4[Truck]
+        F2 --> F5[Vehicle Interface]
+        F3 --> F5
+        F4 --> F5
+    end
+
+    subgraph "👁️ Observer Pattern"
+        O1[NewsSubject] --> O2[NewsObserver 1]
+        O1 --> O3[NewsObserver 2]
+        O1 --> O4[NewsObserver 3]
+        O1 -.->|notify| O2
+        O1 -.->|notify| O3
+        O1 -.->|notify| O4
+    end
+
+    subgraph "🔒 Singleton Pattern"
+        S1[LoggerService] --> S2[Instance 1]
+        S1 --> S3[Instance 2]
+        S1 --> S4[Instance 3]
+        S2 -.->|same instance| S3
+        S3 -.->|same instance| S4
+    end
+
+    subgraph "🎯 Strategy Pattern"
+        ST1[PaymentContext] --> ST2[CreditCardStrategy]
+        ST1 --> ST3[PixStrategy]
+        ST1 --> ST4[BankTransferStrategy]
+        ST2 --> ST5[PaymentStrategy Interface]
+        ST3 --> ST5
+        ST4 --> ST5
+    end
+
+    subgraph "🎨 Decorator Pattern"
+        D1[Espresso] --> D2[MilkDecorator]
+        D2 --> D3[SugarDecorator]
+        D3 --> D4[VanillaDecorator]
+        D1 --> D5[Coffee Interface]
+        D2 --> D5
+        D3 --> D5
+        D4 --> D5
+    end
+
+    classDef factory fill:#e1f5fe
+    classDef observer fill:#f3e5f5
+    classDef singleton fill:#e8f5e8
+    classDef strategy fill:#fff3e0
+    classDef decorator fill:#fce4ec
+
+    class F1,F2,F3,F4,F5 factory
+    class O1,O2,O3,O4 observer
+    class S1,S2,S3,S4 singleton
+    class ST1,ST2,ST3,ST4,ST5 strategy
+    class D1,D2,D3,D4,D5 decorator
+```
+
+### 🔍 **Explicação dos Diagramas:**
+
+- **🏭 Factory:** Centraliza criação de objetos através de uma interface comum
+- **👁️ Observer:** Subject notifica múltiplos observers sobre mudanças
+- **🔒 Singleton:** Garante que todas as instâncias sejam a mesma
+- **🎯 Strategy:** Contexto escolhe algoritmo em tempo de execução
+- **🎨 Decorator:** Envolve objetos adicionando funcionalidades dinamicamente
+
 ## 🛠️ Tecnologias Utilizadas
 
 - **Angular 17+** - Framework principal
@@ -92,7 +162,3 @@ Este projeto é ideal para:
 - Estudantes de programação
 - Profissionais que buscam melhorar a arquitetura de código
 - Qualquer pessoa interessada em padrões de design
-
----
-
-**Desenvolvido com ❤️ para a comunidade Angular**
