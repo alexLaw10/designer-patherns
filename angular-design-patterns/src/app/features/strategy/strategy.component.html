@@ -1,0 +1,175 @@
+<div class="strategy-demo demo-container">
+  <div class="demo-header">
+    <h2>🎯 Strategy Pattern</h2>
+    <p>O Strategy Pattern permite definir uma família de algoritmos, encapsulá-los e torná-los intercambiáveis.</p>
+  </div>
+
+  <div class="demo-content">
+    <div class="strategy-selector demo-section">
+      <h3>🎯 Selecionar Estratégia de Pagamento</h3>
+      <div class="form-grid auto-fit">
+        <div class="form-group">
+          <label>Estratégia:</label>
+          <select [(ngModel)]="selectedStrategy" (change)="setStrategy()" class="form-select">
+            <option *ngFor="let strategy of availableStrategies" [value]="strategy.value">
+              {{ strategy.icon }} {{ strategy.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Valor (R$):</label>
+          <input type="number" [(ngModel)]="amount" [min]="0.01" [step]="0.01" class="form-input">
+        </div>
+      </div>
+
+      <div class="info-card item-list">
+        <div class="info-item list-item">
+          <span class="info-label">Estratégia Atual:</span>
+          <span class="info-value">{{ getCurrentStrategyInfo() }}</span>
+        </div>
+      </div>
+
+      <button (click)="processPayment()" class="btn btn-primary">
+        💳 Processar Pagamento
+      </button>
+    </div>
+
+    <div class="payment-result demo-section" *ngIf="paymentResult">
+      <h3>📋 Resultado do Pagamento</h3>
+      <div class="info-card item-list">
+        <div class="info-item list-item">
+          <span class="info-value">{{ paymentResult }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-history demo-section">
+      <h3>📜 Histórico de Pagamentos ({{ paymentHistory.length }})</h3>
+      <div class="history-controls btn-group">
+        <button (click)="clearHistory()" class="btn btn-secondary">🗑️ Limpar Histórico</button>
+      </div>
+      <div class="history-list item-list">
+        <div *ngFor="let payment of paymentHistory; let i = index" class="history-item list-item">
+          <span class="history-number">{{ i + 1 }}</span>
+          <span class="history-content">{{ payment }}</span>
+        </div>
+        <div *ngIf="paymentHistory.length === 0" class="empty-state">
+          Nenhum pagamento processado ainda
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation">
+    <h3>🔍 Strategy Pattern - Conceito e Implementação</h3>
+    <div class="explanation-content">
+
+      <div class="concept content-card">
+        <h4>📚 Conceito</h4>
+        <p>O Strategy Pattern é um padrão comportamental que define uma família de algoritmos, encapsula cada um deles e os torna intercambiáveis. O Strategy permite que o algoritmo varie independentemente dos clientes que o utilizam.</p>
+        <p><strong>Problema que resolve:</strong> Como permitir que um algoritmo seja selecionado em tempo de execução? Como evitar condicionais complexas para escolher entre diferentes algoritmos?</p>
+      </div>
+
+      <div class="flow content-card">
+        <h4>🔄 Fluxo de Funcionamento</h4>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <strong>Definição da Interface</strong>
+              <p>Define uma interface comum para todas as estratégias (PaymentStrategy).</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <strong>Implementação das Estratégias</strong>
+              <p>Cada estratégia concreta implementa a interface (CreditCard, PIX, etc.).</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <strong>Contexto</strong>
+              <p>O contexto (PaymentContext) mantém uma referência para a estratégia atual.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <strong>Execução</strong>
+              <p>O contexto delega a execução para a estratégia selecionada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="angular-specific content-card">
+        <h4>🅰️ Como Funciona no Angular</h4>
+        <p>No Angular, o Strategy Pattern é usado em várias situações:</p>
+        <ul>
+          <li><strong>Form Validators:</strong> Diferentes estratégias de validação para formulários</li>
+          <li><strong>HTTP Interceptors:</strong> Diferentes estratégias de interceptação de requisições</li>
+          <li><strong>Route Guards:</strong> Diferentes estratégias de proteção de rotas</li>
+          <li><strong>Data Transformers:</strong> Diferentes estratégias de transformação de dados</li>
+        </ul>
+      </div>
+
+      <div class="code-example content-card">
+        <h4>💻 Código do Exemplo</h4>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="traffic-lights">
+              <div class="traffic-light close"></div>
+              <div class="traffic-light minimize"></div>
+              <div class="traffic-light maximize"></div>
+            </div>
+            <div class="code-title">payment-strategy.interface.ts</div>
+          </div>
+          <pre><code>// Interface Strategy
+export interface PaymentStrategy &#123;
+  processPayment(amount: number): string;
+  getStrategyName(): string;
+  getDescription(): string;
+&#125;
+
+// Estratégia Concreta - PIX
+export class PixStrategy implements PaymentStrategy &#123;
+  constructor(private pixKey: string) &#123;&#125;
+
+  processPayment(amount: number): string &#123;
+    return `Pagamento de R$ $&#123;amount&#125; processado via PIX`;
+  &#125;
+
+  getStrategyName(): string &#123;
+    return 'PIX';
+  &#125;
+
+  getDescription(): string &#123;
+    return 'Pagamento instantâneo via PIX';
+  &#125;
+&#125;
+
+// Contexto
+@Injectable(&#123; providedIn: 'root' &#125;)
+export class PaymentContextService &#123;
+  private currentStrategy: PaymentStrategy | null = null;
+
+  setStrategy(strategy: PaymentStrategy): void &#123;
+    this.currentStrategy = strategy;
+  &#125;
+
+  processPayment(amount: number): string &#123;
+    if (!this.currentStrategy) &#123;
+      throw new Error('Nenhuma estratégia definida');
+    &#125;
+    return this.currentStrategy.processPayment(amount);
+  &#125;
+&#125;</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

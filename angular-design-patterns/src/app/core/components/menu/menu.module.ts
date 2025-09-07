@@ -26,6 +26,14 @@ const routes: Routes = [
                   {
                     path: 'singleton',
                     loadChildren: () => import('../../../features/singleton/singleton.module').then(m => m.SingletonModule)
+                  },
+                  {
+                    path: 'strategy',
+                    loadChildren: () => import('../../../features/strategy/strategy.module').then(m => m.StrategyModule)
+                  },
+                  {
+                    path: 'decorator',
+                    loadChildren: () => import('../../../features/decorator/decorator.module').then(m => m.DecoratorModule)
                   }
     ]
   }

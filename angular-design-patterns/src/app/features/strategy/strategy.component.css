@@ -1,0 +1,54 @@
+/* Strategy Pattern Specific Styles */
+
+
+.strategy-demo .demo-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+}
+
+.strategy-demo .form-input:focus,
+.strategy-demo .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+/* History specific styles */
+.history-number {
+  background: var(--primary-color);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.history-content {
+  flex: 1;
+  color: #2c3e50;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .history-number {
+    margin-bottom: 8px;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-content {
+    font-size: 13px;
+  }
+}

@@ -32,16 +32,16 @@ export class MenuComponent implements OnInit {
     {
       id: 'strategy',
       title: 'Strategy',
-      description: 'Realizando estudos de casos para demonstração e implementação',
-      route: '#',
-      isImplemented: false
+      description: 'Padrão para definir algoritmos intercambiáveis em tempo de execução',
+      route: '/patterns/strategy',
+      isImplemented: true
     },
     {
       id: 'decorator',
       title: 'Decorator',
-      description: 'Realizando estudos de casos para demonstração e implementação',
-      route: '#',
-      isImplemented: false
+      description: 'Padrão para adicionar comportamentos a objetos dinamicamente',
+      route: '/patterns/decorator',
+      isImplemented: true
     }
   ];
 

@@ -1,0 +1,201 @@
+<div class="decorator-demo demo-container">
+  <div class="demo-header">
+    <h2>🎨 Decorator Pattern</h2>
+    <p>O Decorator Pattern permite adicionar comportamentos a objetos dinamicamente, sem alterar sua estrutura.</p>
+  </div>
+
+  <div class="demo-content">
+    <div class="coffee-selector demo-section">
+      <h3>☕ Selecionar Café Base</h3>
+      <div class="form-grid auto-fit">
+        <div class="form-group">
+          <label>Tipo de Café:</label>
+          <select [(ngModel)]="selectedCoffee" (change)="createCoffee()" class="form-select">
+            <option *ngFor="let coffee of availableCoffees" [value]="coffee.value">
+              {{ coffee.icon }} {{ coffee.label }} - R$ {{ coffee.cost.toFixed(2) }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="decorators-section demo-section">
+      <h3>🎨 Adicionar Decorators</h3>
+      <div class="decorators-grid grid auto-fit-200">
+        <div *ngFor="let decorator of availableDecorators" 
+             class="decorator-card grid-card"
+             [class.selected]="isDecoratorSelected(decorator.value)"
+             (click)="toggleDecorator(decorator.value)">
+          <span class="decorator-icon">{{ decorator.icon }}</span>
+          <span class="decorator-name">{{ decorator.label }}</span>
+          <span class="decorator-cost">+R$ {{ decorator.cost.toFixed(2) }}</span>
+        </div>
+      </div>
+      <div class="decorator-controls btn-group">
+        <button (click)="resetCoffee()" class="btn btn-secondary">🔄 Resetar</button>
+      </div>
+    </div>
+
+    <div class="coffee-result demo-section" *ngIf="currentCoffee">
+      <h3>☕ Seu Café Personalizado</h3>
+      <div class="info-card item-list">
+        <div class="info-item list-item">
+          <span class="info-label">Descrição:</span>
+          <span class="info-value">{{ currentCoffee.getDescription() }}</span>
+        </div>
+        <div class="info-item list-item">
+          <span class="info-label">Preço Total:</span>
+          <span class="info-value">R$ {{ currentCoffee.getCost().toFixed(2) }}</span>
+        </div>
+        <div class="info-item list-item">
+          <span class="info-label">Ingredientes:</span>
+          <span class="info-value">{{ currentCoffee.getIngredients().join(', ') }}</span>
+        </div>
+      </div>
+      <button (click)="addToHistory()" class="btn btn-primary">
+        📝 Adicionar ao Histórico
+      </button>
+    </div>
+
+    <div class="coffee-history demo-section">
+      <h3>📜 Histórico de Cafés ({{ coffeeHistory.length }})</h3>
+      <div class="history-controls btn-group">
+        <button (click)="clearHistory()" class="btn btn-secondary">🗑️ Limpar Histórico</button>
+      </div>
+      <div class="history-list item-list">
+        <div *ngFor="let coffee of coffeeHistory; let i = index" class="history-item list-item">
+          <span class="history-number">{{ i + 1 }}</span>
+          <span class="history-content">{{ coffee }}</span>
+        </div>
+        <div *ngIf="coffeeHistory.length === 0" class="empty-state">
+          Nenhum café criado ainda
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation">
+    <h3>🔍 Decorator Pattern - Conceito e Implementação</h3>
+    <div class="explanation-content">
+
+      <div class="concept content-card">
+        <h4>📚 Conceito</h4>
+        <p>O Decorator Pattern é um padrão estrutural que permite adicionar novos comportamentos a objetos dinamicamente, colocando-os dentro de objetos wrapper que contêm esses comportamentos.</p>
+        <p><strong>Problema que resolve:</strong> Como adicionar funcionalidades a objetos sem alterar sua estrutura? Como combinar funcionalidades de forma flexível?</p>
+      </div>
+
+      <div class="flow content-card">
+        <h4>🔄 Fluxo de Funcionamento</h4>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <strong>Componente Base</strong>
+              <p>Define a interface comum para objetos que podem ter responsabilidades adicionadas dinamicamente.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <strong>Componente Concreto</strong>
+              <p>Implementa a interface base com comportamento básico.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <strong>Decorator Abstrato</strong>
+              <p>Mantém uma referência para o componente e implementa a interface.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <strong>Decorator Concreto</strong>
+              <p>Adiciona responsabilidades específicas ao componente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="angular-specific content-card">
+        <h4>🅰️ Como Funciona no Angular</h4>
+        <p>No Angular, o Decorator Pattern é usado em várias situações:</p>
+        <ul>
+          <li><strong>Angular Decorators:</strong> @Component, @Injectable, @Input, @Output</li>
+          <li><strong>HTTP Interceptors:</strong> Adicionam funcionalidades às requisições HTTP</li>
+          <li><strong>Directives:</strong> Adicionam comportamentos a elementos DOM</li>
+          <li><strong>Pipes:</strong> Transformam dados de forma encadeável</li>
+        </ul>
+      </div>
+
+      <div class="code-example content-card">
+        <h4>💻 Código do Exemplo</h4>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="traffic-lights">
+              <div class="traffic-light close"></div>
+              <div class="traffic-light minimize"></div>
+              <div class="traffic-light maximize"></div>
+            </div>
+            <div class="code-title">coffee-decorator.service.ts</div>
+          </div>
+          <pre><code>// Interface Component
+export interface Coffee &#123;
+  getDescription(): string;
+  getCost(): number;
+  getIngredients(): string[];
+&#125;
+
+// Componente Concreto
+export class Espresso implements Coffee &#123;
+  getDescription(): string &#123;
+    return 'Espresso';
+  &#125;
+  
+  getCost(): number &#123;
+    return 2.50;
+  &#125;
+  
+  getIngredients(): string[] &#123;
+    return ['Café moído', 'Água quente'];
+  &#125;
+&#125;
+
+// Decorator Abstrato
+export abstract class CoffeeDecorator implements Coffee &#123;
+  constructor(protected coffee: Coffee) &#123;&#125;
+  
+  getDescription(): string &#123;
+    return this.coffee.getDescription();
+  &#125;
+  
+  getCost(): number &#123;
+    return this.coffee.getCost();
+  &#125;
+  
+  getIngredients(): string[] &#123;
+    return this.coffee.getIngredients();
+  &#125;
+&#125;
+
+// Decorator Concreto
+export class MilkDecorator extends CoffeeDecorator &#123;
+  getDescription(): string &#123;
+    return this.coffee.getDescription() + ', Leite';
+  &#125;
+  
+  getCost(): number &#123;
+    return this.coffee.getCost() + 0.50;
+  &#125;
+  
+  getIngredients(): string[] &#123;
+    return [...this.coffee.getIngredients(), 'Leite'];
+  &#125;
+&#125;</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
