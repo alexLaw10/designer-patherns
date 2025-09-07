@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MenuComponent } from './menu.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from '../home/home.component';
 
 const routes: Routes = [
   {
@@ -17,15 +17,15 @@ const routes: Routes = [
       },
       {
         path: 'observer',
-        loadChildren: () => import('../../features/observer/observer.module').then(m => m.ObserverModule)
+        loadChildren: () => import('../../../features/observer/observer.module').then(m => m.ObserverModule)
       },
                   {
                     path: 'factory',
-                    loadChildren: () => import('../../features/factory/factory.module').then(m => m.FactoryModule)
+                    loadChildren: () => import('../../../features/factory/factory.module').then(m => m.FactoryModule)
                   },
                   {
                     path: 'singleton',
-                    loadChildren: () => import('../../features/singleton/singleton.module').then(m => m.SingletonModule)
+                    loadChildren: () => import('../../../features/singleton/singleton.module').then(m => m.SingletonModule)
                   }
     ]
   }

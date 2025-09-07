@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'patterns',
-    loadChildren: () => import('./components/menu/menu.module').then(m => m.MenuModule)
+    loadChildren: () => import('./core/components/menu/menu.module').then(m => m.MenuModule)
   },
   {
     path: '**',

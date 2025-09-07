@@ -1,13 +1,13 @@
-<div class="factory-demo">
+<div class="factory-demo demo-container">
   <div class="demo-header">
     <h2>🏭 Factory Pattern</h2>
     <p>O Factory Pattern permite criar objetos sem especificar suas classes concretas.</p>
   </div>
   
   <div class="demo-content">
-    <div class="creator-section">
+    <div class="creator-section demo-section">
       <h3>🔨 Criar Veículo</h3>
-      <div class="form-grid">
+      <div class="form-grid auto-fit">
     <div class="form-group">
           <label>Tipo:</label>
           <select [(ngModel)]="vehicleType" class="form-select">
@@ -33,16 +33,16 @@
         </div>
       </div>
       
-      <button (click)="createVehicle()" class="btn-primary" [disabled]="!isFormValid()">
+      <button (click)="createVehicle()" class="btn btn-primary" [disabled]="!isFormValid()">
         🔨 Criar Veículo
       </button>
     </div>
     
-    <div class="vehicles-section">
+    <div class="vehicles-section demo-section">
       <h3>🚗 Veículos Criados ({{ createdVehicles.length }})</h3>
-    <div class="vehicles-list">
+      <div class="vehicles-list item-list">
       <div *ngFor="let vehicle of createdVehicles; let i = index" 
-           class="vehicle-item"
+             class="vehicle-item list-item"
            [class.selected]="selectedVehicle === vehicle"
            (click)="selectVehicle(vehicle)">
           
@@ -52,15 +52,14 @@
           </div>
           
         <div class="vehicle-info">
-            <div class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</div>
+            <div class="vehicle-name">{{ vehicle.getInfo() }}</div>
             <div class="vehicle-specs">
-              <span>Ano: {{ vehicle.year }}</span>
               <span>Tipo: {{ vehicle.constructor.name }}</span>
             </div>
           </div>
           
           <div class="vehicle-actions">
-            <button (click)="removeVehicle(i); $event.stopPropagation()" class="btn-danger">
+            <button (click)="removeVehicle(i); $event.stopPropagation()" class="btn btn-danger">
               🗑️
             </button>
           </div>
@@ -72,7 +71,7 @@
     </div>
   </div>
 
-    <div class="controls-section" *ngIf="selectedVehicle">
+    <div class="controls-section demo-section" *ngIf="selectedVehicle">
       <h3>🎮 Controles</h3>
       <div class="control-panel">
         <div class="selected-info">
@@ -80,16 +79,16 @@
           <span class="selected-name">{{ selectedVehicle.getInfo() }}</span>
         </div>
         <div class="control-buttons">
-          <button (click)="startVehicle()" class="btn-success">▶️ Ligar</button>
-          <button (click)="stopVehicle()" class="btn-warning">⏹️ Desligar</button>
+          <button (click)="startVehicle()" class="btn btn-success">▶️ Ligar</button>
+          <button (click)="stopVehicle()" class="btn btn-warning">⏹️ Desligar</button>
         </div>
       </div>
     </div>
     
-    <div class="log-section">
+    <div class="log-section demo-section">
       <h3>📋 Log de Ações</h3>
       <div class="log-controls">
-        <button (click)="clearLog()" class="btn-secondary">🗑️ Limpar</button>
+        <button (click)="clearLog()" class="btn btn-secondary">🗑️ Limpar</button>
       </div>
       <div class="log-list">
         <div *ngFor="let log of actionLog" class="log-item">
@@ -104,290 +103,116 @@
   </div>
 
   <div class="explanation">
-    <h3>🔍 Contexto Completo do Factory Pattern</h3>
+    <h3>🔍 Factory Pattern - Conceito e Implementação</h3>
     <div class="explanation-content">
-      <div class="concept">
-        <h4>📚 Conceito e Origem</h4>
-        <p>O Factory Pattern é um padrão criacional fundamental da Gang of Four (GoF) que fornece uma interface para criar objetos sem especificar suas classes concretas. A factory decide qual classe instanciar baseado em parâmetros fornecidos.</p>
-        <p><strong>Histórico:</strong> Também criado em 1994 pelos mesmos autores do Observer Pattern. É um dos padrões mais utilizados em frameworks e bibliotecas modernas, especialmente em sistemas de injeção de dependência.</p>
-        <p><strong>Problema que resolve:</strong> Como criar objetos sem acoplar o código às classes concretas? Como centralizar a lógica de criação de objetos? Como facilitar a adição de novos tipos de objetos?</p>
+      
+      <div class="concept content-card">
+        <h4>📚 Conceito</h4>
+        <p>O Factory Pattern é um padrão criacional que fornece uma interface para criar objetos sem especificar suas classes concretas. A factory decide qual classe instanciar baseado em parâmetros fornecidos.</p>
+        <p><strong>Problema que resolve:</strong> Como criar objetos sem acoplar o código às classes concretas? Como centralizar a lógica de criação de objetos?</p>
       </div>
       
-      <div class="real-world-examples">
-        <h4>🌍 Exemplos do Mundo Real</h4>
-        <div class="examples-grid">
-          <div class="example-card">
-            <h5>🏭 Frameworks de UI</h5>
-            <ul>
-              <li><strong>Angular:</strong> ComponentFactoryResolver</li>
-              <li><strong>React:</strong> createElement, createFactory</li>
-              <li><strong>Vue:</strong> createComponent, h() function</li>
-              <li><strong>Flutter:</strong> Widget factories</li>
-            </ul>
-          </div>
-          <div class="example-card">
-            <h5>🗄️ Bancos de Dados</h5>
-            <ul>
-              <li><strong>ORM:</strong> Entity factories</li>
-              <li><strong>Migrations:</strong> Schema factories</li>
-              <li><strong>Seeds:</strong> Data factories</li>
-              <li><strong>Connections:</strong> Database factories</li>
-            </ul>
-          </div>
-          <div class="example-card">
-            <h5>🌐 APIs e Integrações</h5>
-            <ul>
-              <li><strong>HTTP Clients:</strong> Request factories</li>
-              <li><strong>WebSockets:</strong> Connection factories</li>
-              <li><strong>Payment Gateways:</strong> Processor factories</li>
-              <li><strong>Email Services:</strong> Provider factories</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="components">
-        <h4>🧩 Componentes</h4>
-        <div class="component-list">
-          <div class="component">
-            <strong>Product Interface:</strong>
-            <ul>
-              <li>Define a interface comum para todos os produtos</li>
-              <li>Especifica os métodos que todos os produtos devem implementar</li>
-              <li>Permite tratar diferentes produtos de forma uniforme</li>
-            </ul>
-          </div>
-          <div class="component">
-            <strong>Concrete Products:</strong>
-            <ul>
-              <li>Implementações específicas da interface Product</li>
-              <li>Cada produto tem suas próprias características</li>
-              <li>Exemplos: Car, Motorcycle, Truck</li>
-            </ul>
-          </div>
-          <div class="component">
-            <strong>Factory:</strong>
-            <ul>
-              <li>Contém a lógica para decidir qual produto criar</li>
-              <li>Encapsula a criação de objetos</li>
-              <li>Retorna a interface comum, não a implementação</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="flow">
+      <div class="flow content-card">
         <h4>🔄 Fluxo de Funcionamento</h4>
         <div class="flow-steps">
           <div class="flow-step">
-            <span class="step-number">1</span>
+            <div class="step-number">1</div>
             <div class="step-content">
-              <strong>Solicitação:</strong> Cliente solicita um produto via Factory
+              <strong>Cliente solicita criação</strong>
+              <p>O cliente chama o método factory passando parâmetros que indicam o tipo de objeto desejado.</p>
             </div>
           </div>
           <div class="flow-step">
-            <span class="step-number">2</span>
+            <div class="step-number">2</div>
             <div class="step-content">
-              <strong>Decisão:</strong> Factory analisa os parâmetros fornecidos
+              <strong>Factory analisa parâmetros</strong>
+              <p>A factory examina os parâmetros fornecidos para determinar qual tipo de produto criar.</p>
             </div>
           </div>
           <div class="flow-step">
-            <span class="step-number">3</span>
+            <div class="step-number">3</div>
             <div class="step-content">
-              <strong>Criação:</strong> Factory instancia a classe apropriada
+              <strong>Factory instancia produto</strong>
+              <p>Baseado na análise, a factory instancia a classe concreta apropriada.</p>
             </div>
           </div>
           <div class="flow-step">
-            <span class="step-number">4</span>
+            <div class="step-number">4</div>
             <div class="step-content">
-              <strong>Retorno:</strong> Cliente recebe o objeto via interface comum
+              <strong>Retorna produto configurado</strong>
+              <p>A factory retorna o objeto criado, pronto para uso pelo cliente.</p>
             </div>
           </div>
         </div>
       </div>
       
-      <div class="benefits">
-        <h4>✅ Vantagens</h4>
+      <div class="angular-specific content-card">
+        <h4>🅰️ Como Funciona no Angular</h4>
+        <p>No Angular, o Factory Pattern é usado em várias situações:</p>
         <ul>
-          <li><strong>Encapsulamento:</strong> Lógica de criação centralizada</li>
-          <li><strong>Flexibilidade:</strong> Fácil adicionar novos tipos de produtos</li>
-          <li><strong>Acoplamento baixo:</strong> Cliente não depende de classes concretas</li>
-          <li><strong>Reutilização:</strong> Factory pode ser reutilizada em diferentes contextos</li>
-          <li><strong>Manutenibilidade:</strong> Mudanças na criação ficam isoladas</li>
+          <li><strong>ComponentFactoryResolver:</strong> Para criar componentes dinamicamente</li>
+          <li><strong>ViewContainerRef.createComponent():</strong> Criação de componentes em runtime</li>
+          <li><strong>Service Factories:</strong> Criação de serviços com configurações específicas</li>
+          <li><strong>Form Controls:</strong> Criação de diferentes tipos de controles de formulário</li>
         </ul>
       </div>
       
-      <div class="use-cases">
-        <h4>🎯 Casos de Uso Detalhados</h4>
-        <div class="use-cases-grid">
-          <div class="use-case">
-            <h5>🏭 Frameworks de UI</h5>
-            <p>Criação dinâmica de componentes baseada em configuração ou tipo.</p>
-            <ul>
-              <li>Formulários dinâmicos</li>
-              <li>Dashboards configuráveis</li>
-              <li>Componentes de tabela</li>
-              <li>Widgets personalizados</li>
-            </ul>
-          </div>
-          <div class="use-case">
-            <h5>🗄️ Conectores de Banco</h5>
-            <p>Diferentes drivers e conectores para diferentes SGBDs.</p>
-            <ul>
-              <li>MySQL, PostgreSQL, Oracle</li>
-              <li>MongoDB, Redis, Cassandra</li>
-              <li>Connection pooling</li>
-              <li>Query builders</li>
-            </ul>
-          </div>
-          <div class="use-case">
-            <h5>💳 Processadores de Pagamento</h5>
-            <p>Diferentes gateways e métodos de pagamento.</p>
-            <ul>
-              <li>Stripe, PayPal, PagSeguro</li>
-              <li>Cartão, PIX, Boleto</li>
-              <li>Fraud detection</li>
-              <li>Webhook handlers</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="angular-specific">
-        <h4>⚡ Factory Pattern no Angular</h4>
-        <div class="angular-examples">
-          <div class="angular-example">
-            <h5>🏗️ Dependency Injection</h5>
-            <p>O Angular usa extensivamente o Factory Pattern através do sistema de DI:</p>
-            <ul>
-              <li><strong>Providers:</strong> useFactory para criação customizada</li>
-              <li><strong>Services:</strong> Criação baseada em configuração</li>
-              <li><strong>Components:</strong> Dynamic component creation</li>
-              <li><strong>Guards:</strong> Route guards factory</li>
-            </ul>
-          </div>
-          <div class="angular-example">
-            <h5>🎯 Component Factory</h5>
-            <p>ComponentFactoryResolver para criação dinâmica de componentes:</p>
-            <ul>
-              <li>Modal dialogs dinâmicos</li>
-              <li>Formulários baseados em schema</li>
-              <li>Widgets configuráveis</li>
-              <li>Plugin systems</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="variations">
-        <h4>🔄 Variações do Factory Pattern</h4>
-        <div class="variations-grid">
-          <div class="variation">
-            <h5>🏭 Simple Factory</h5>
-            <p>Factory simples com um método estático que retorna objetos baseado em parâmetros.</p>
-            <ul>
-              <li>Mais simples de implementar</li>
-              <li>Ideal para casos básicos</li>
-              <li>Menos flexível</li>
-            </ul>
-          </div>
-          <div class="variation">
-            <h5>🏗️ Factory Method</h5>
-            <p>Classe abstrata com método factory abstrato, delegando criação para subclasses.</p>
-            <ul>
-              <li>Mais flexível</li>
-              <li>Extensível via herança</li>
-              <li>Ideal para famílias de produtos</li>
-            </ul>
-          </div>
-          <div class="variation">
-            <h5>🏭 Abstract Factory</h5>
-            <p>Factory de factories, criando famílias de objetos relacionados.</p>
-            <ul>
-              <li>Máxima flexibilidade</li>
-              <li>Famílias de produtos</li>
-              <li>Mais complexo</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="best-practices">
-        <h4>✅ Melhores Práticas</h4>
-        <div class="practices-grid">
-          <div class="practice">
-            <h5>🎯 Design</h5>
-            <ul>
-              <li>Use interfaces para desacoplar factory e produtos</li>
-              <li>Implemente validação de parâmetros</li>
-              <li>Considere usar enums para tipos</li>
-              <li>Documente claramente os tipos suportados</li>
-            </ul>
-          </div>
-          <div class="practice">
-            <h5>⚡ Performance</h5>
-            <ul>
-              <li>Considere caching de instâncias</li>
-              <li>Use lazy loading quando apropriado</li>
-              <li>Implemente pooling para objetos caros</li>
-              <li>Monitore uso de memória</li>
-            </ul>
-          </div>
-          <div class="practice">
-            <h5>🐛 Error Handling</h5>
-            <ul>
-              <li>Valide parâmetros de entrada</li>
-              <li>Forneça mensagens de erro claras</li>
-              <li>Implemente fallbacks quando possível</li>
-              <li>Use logging para debugging</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="alternatives">
-        <h4>🔄 Alternativas e Padrões Relacionados</h4>
-        <div class="alternatives-grid">
-          <div class="alternative">
-            <h5>🏗️ Builder Pattern</h5>
-            <p>Para criação de objetos complexos com muitos parâmetros opcionais.</p>
-          </div>
-          <div class="alternative">
-            <h5>🎯 Prototype Pattern</h5>
-            <p>Para clonagem de objetos existentes em vez de criação do zero.</p>
-          </div>
-          <div class="alternative">
-            <h5>💉 Dependency Injection</h5>
-            <p>Para injeção automática de dependências em vez de criação manual.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="code-example">
-        <h4>💻 Exemplo de Código</h4>
+      <div class="code-example content-card">
+        <h4>💻 Código do Exemplo</h4>
         <div class="code-block">
-          <pre><code>// Interface comum
-interface Vehicle {{ '{' }}
-  start(): string;
-  stop(): string;
-{{ '}' }}
+          <div class="code-header">
+            <div class="traffic-lights">
+              <div class="traffic-light close"></div>
+              <div class="traffic-light minimize"></div>
+              <div class="traffic-light maximize"></div>
+            </div>
+            <div class="code-title">vehicle-factory.service.ts</div>
+          </div>
+          <pre><code>// Interface do produto
+export interface Vehicle &#123;
+  getInfo(): string;
+  start(): void;
+  stop(): void;
+&#125;
 
-// Factory
-class VehicleFactory {{ '{' }}
-  static createVehicle(type: string, brand: string, model: string, year: number): Vehicle {{ '{' }}
-    switch(type) {{ '{' }}
-      case 'car': return new Car(brand, model, year);
-      case 'motorcycle': return new Motorcycle(brand, model, year);
-      case 'truck': return new Truck(brand, model, year);
-      default: throw new Error('Tipo não suportado');
-    {{ '}' }}
-  {{ '}' }}
-{{ '}' }}
+// Produtos concretos
+export class Car implements Vehicle &#123;
+  constructor(private brand: string, private model: string, private year: number) &#123;&#125;
+  
+  getInfo(): string &#123;
+    return this.brand + ' ' + this.model + ' (' + this.year + ')';
+  &#125;
+  
+  start(): void &#123;
+    console.log('Carro ligado');
+  &#125;
+  
+  stop(): void &#123;
+    console.log('Carro desligado');
+  &#125;
+&#125;
 
-// Uso
-const vehicle = VehicleFactory.createVehicle('car', 'Toyota', 'Corolla', 2023);</code></pre>
-    </div>
+// Factory Service
+@Injectable(&#123;
+  providedIn: 'root'
+&#125;)
+export class VehicleFactoryService &#123;
+  createVehicle(type: string, brand: string, model: string, year: number): Vehicle &#123;
+    switch (type.toLowerCase()) &#123;
+      case 'car':
+        return new Car(brand, model, year);
+      case 'motorcycle':
+        return new Motorcycle(brand, model, year);
+      case 'truck':
+        return new Truck(brand, model, year);
+      default:
+        throw new Error('Tipo de veículo não suportado: ' + type);
+    &#125;
+  &#125;
+&#125;</code></pre>
+        </div>
       </div>
+      
     </div>
   </div>
 </div>

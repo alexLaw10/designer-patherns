@@ -1,11 +1,11 @@
-<div class="observer-demo">
+<div class="observer-demo demo-container">
   <div class="demo-header">
     <h2>👁️ Observer Pattern</h2>
     <p>O Observer Pattern permite que objetos sejam notificados automaticamente sobre mudanças de estado.</p>
   </div>
   
   <div class="demo-content">
-    <div class="input-section">
+    <div class="input-section demo-section">
       <h3>📰 Publicar Notícia</h3>
       <div class="input-group">
         <input 
@@ -14,30 +14,38 @@
           placeholder="Digite uma notícia..."
           class="news-input"
           (keyup.enter)="addNews()">
-        <button (click)="addNews()" class="btn-primary" [disabled]="!newNews.trim()">
+        <button (click)="addNews()" class="btn btn-primary" [disabled]="!newNews.trim()">
           Publicar
         </button>
       </div>
     </div>
     
-    <div class="observers-section">
+    <div class="observers-section demo-section">
       <h3>👥 Observadores ({{ observers.length }})</h3>
       <div class="observers-list">
         <div *ngFor="let observer of observers; let i = index" class="observer-item">
           <span class="observer-name">{{ observer.name }}</span>
           <span class="observer-role">{{ getObserverRole(i) }}</span>
+          <div class="observer-last">
+            <small *ngIf="observer.lastNews; else noNews">
+              Última: "{{ observer.lastNews }}" — {{ observer.lastReceivedAt | date:'shortTime' }}
+            </small>
+            <ng-template #noNews>
+              <small>Nenhuma notícia recebida ainda</small>
+            </ng-template>
+          </div>
         </div>
       </div>
-      <button (click)="addObserver()" class="btn-secondary">+ Adicionar Observador</button>
+      <button (click)="addObserver()" class="btn btn-secondary">➕ Adicionar Observador</button>
     </div>
     
-    <div class="news-section">
-      <h3>📋 Feed de Notícias</h3>
+    <div class="news-section demo-section">
+      <h3>📰 Notícias Publicadas ({{ news.length }})</h3>
       <div class="news-list">
         <div *ngFor="let newsItem of news; let i = index" class="news-item">
-          <span class="news-number">{{ i + 1 }}</span>
-          <span class="news-content">{{ newsItem }}</span>
-          <span class="news-time">{{ getCurrentTime() }}</span>
+          <div class="news-number">{{ i + 1 }}</div>
+          <div class="news-content">{{ newsItem }}</div>
+          <div class="news-time">{{ getCurrentTime() }}</div>
         </div>
         <div *ngIf="news.length === 0" class="empty-state">
           Nenhuma notícia publicada ainda
@@ -45,217 +53,128 @@
       </div>
     </div>
   </div>
-  
+
   <div class="explanation">
-    <h3>🔍 Contexto Completo do Observer Pattern</h3>
+    <h3>🔍 Observer Pattern - Conceito e Implementação</h3>
     <div class="explanation-content">
-      <div class="concept">
-        <h4>📚 Conceito e Origem</h4>
-        <p>O Observer Pattern é um padrão comportamental fundamental da Gang of Four (GoF) que define uma dependência um-para-muitos entre objetos. Quando um objeto muda de estado, todos os seus dependentes são notificados e atualizados automaticamente.</p>
-        <p><strong>Histórico:</strong> Criado em 1994 por Erich Gamma, Richard Helm, Ralph Johnson e John Vlissides no livro "Design Patterns: Elements of Reusable Object-Oriented Software". É um dos padrões mais antigos e amplamente utilizados em programação orientada a objetos.</p>
-        <p><strong>Problema que resolve:</strong> Como notificar múltiplos objetos sobre mudanças de estado sem criar acoplamento forte entre eles? Como manter a consistência entre objetos relacionados quando um deles muda?</p>
+      
+      <div class="concept content-card">
+        <h4>📚 Conceito</h4>
+        <p>O Observer Pattern é um padrão comportamental que define uma dependência um-para-muitos entre objetos, de modo que quando um objeto muda de estado, todos os seus dependentes são notificados e atualizados automaticamente.</p>
+        <p><strong>Problema que resolve:</strong> Como notificar múltiplos objetos sobre mudanças em outro objeto sem acoplá-los diretamente?</p>
       </div>
       
-      <div class="real-world-examples">
-        <h4>🌍 Exemplos do Mundo Real</h4>
-        <div class="examples-grid">
-          <div class="example-card">
-            <h5>📱 Aplicações Mobile</h5>
-            <ul>
-              <li><strong>Push Notifications:</strong> Servidor notifica todos os dispositivos</li>
-              <li><strong>Atualizações de Estado:</strong> Mudanças de rede, localização</li>
-              <li><strong>Eventos de UI:</strong> Toques, gestos, orientação</li>
-            </ul>
-          </div>
-          <div class="example-card">
-            <h5>🌐 Desenvolvimento Web</h5>
-            <ul>
-              <li><strong>WebSockets:</strong> Atualizações em tempo real</li>
-              <li><strong>Event Listeners:</strong> DOM events, custom events</li>
-              <li><strong>State Management:</strong> Redux, Vuex, NgRx</li>
-            </ul>
-          </div>
-          <div class="example-card">
-            <h5>🏢 Sistemas Empresariais</h5>
-            <ul>
-              <li><strong>Auditoria:</strong> Log de mudanças em dados</li>
-              <li><strong>Workflow:</strong> Notificações de aprovação</li>
-              <li><strong>Integração:</strong> Sincronização entre sistemas</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="components">
-        <h4>🧩 Componentes</h4>
-        <div class="component-list">
-          <div class="component">
-            <strong>Subject (Assunto):</strong>
-            <ul>
-              <li>Mantém uma lista de observadores</li>
-              <li>Fornece métodos para adicionar/remover observadores</li>
-              <li>Notifica todos os observadores quando há mudanças</li>
-            </ul>
-          </div>
-          <div class="component">
-            <strong>Observer (Observador):</strong>
-            <ul>
-              <li>Define uma interface para receber notificações</li>
-              <li>Implementa o método de atualização</li>
-              <li>Reage às mudanças do subject</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="flow">
+      <div class="flow content-card">
         <h4>🔄 Fluxo de Funcionamento</h4>
         <div class="flow-steps">
           <div class="flow-step">
-            <span class="step-number">1</span>
+            <div class="step-number">1</div>
             <div class="step-content">
-              <strong>Registro:</strong> Observadores se registram no Subject
+              <strong>Subject recebe mudança</strong>
+              <p>O objeto observado (Subject) recebe uma mudança de estado.</p>
             </div>
           </div>
           <div class="flow-step">
-            <span class="step-number">2</span>
+            <div class="step-number">2</div>
             <div class="step-content">
-              <strong>Mudança:</strong> Subject detecta uma mudança de estado
+              <strong>Subject notifica observers</strong>
+              <p>O Subject percorre sua lista de observers e os notifica sobre a mudança.</p>
             </div>
           </div>
           <div class="flow-step">
-            <span class="step-number">3</span>
+            <div class="step-number">3</div>
             <div class="step-content">
-              <strong>Notificação:</strong> Subject notifica todos os observadores registrados
+              <strong>Observers reagem</strong>
+              <p>Cada observer recebe a notificação e executa sua lógica de atualização.</p>
             </div>
           </div>
           <div class="flow-step">
-            <span class="step-number">4</span>
+            <div class="step-number">4</div>
             <div class="step-content">
-              <strong>Atualização:</strong> Cada observador reage à notificação
+              <strong>Estado sincronizado</strong>
+              <p>Todos os observers ficam sincronizados com o novo estado do Subject.</p>
             </div>
           </div>
         </div>
       </div>
       
-      <div class="benefits">
-        <h4>✅ Vantagens</h4>
+      <div class="angular-specific content-card">
+        <h4>🅰️ Como Funciona no Angular</h4>
+        <p>No Angular, o Observer Pattern é fundamental e usado em várias situações:</p>
         <ul>
-          <li><strong>Acoplamento baixo:</strong> Subject e Observer são independentes</li>
-          <li><strong>Extensibilidade:</strong> Fácil adicionar novos observadores</li>
-          <li><strong>Reutilização:</strong> Observadores podem ser reutilizados</li>
-          <li><strong>Notificação automática:</strong> Mudanças são propagadas automaticamente</li>
+          <li><strong>Data Binding:</strong> Atualização automática da UI quando dados mudam</li>
+          <li><strong>Change Detection:</strong> Zone.js detecta mudanças e atualiza componentes</li>
+          <li><strong>EventEmitter:</strong> Comunicação entre componentes pai e filho</li>
+          <li><strong>RxJS Observables:</strong> Streams de dados reativos</li>
+          <li><strong>NgRx Store:</strong> Gerenciamento de estado global</li>
         </ul>
       </div>
       
-      <div class="use-cases">
-        <h4>🎯 Casos de Uso Detalhados</h4>
-        <div class="use-cases-grid">
-          <div class="use-case">
-            <h5>📧 Sistemas de Notificação</h5>
-            <p>Notificações por email, SMS, push notifications quando eventos importantes ocorrem no sistema.</p>
-            <ul>
-              <li>Novo usuário registrado</li>
-              <li>Pagamento processado</li>
-              <li>Erro crítico no sistema</li>
-            </ul>
+      <div class="code-example content-card">
+        <h4>💻 Código do Exemplo</h4>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="traffic-lights">
+              <div class="traffic-light close"></div>
+              <div class="traffic-light minimize"></div>
+              <div class="traffic-light maximize"></div>
+            </div>
+            <div class="code-title">news-subject.service.ts</div>
           </div>
-          <div class="use-case">
-            <h5>🖥️ Model-View (MVC/MVP/MVVM)</h5>
-            <p>Atualização automática da interface quando o modelo de dados muda.</p>
-            <ul>
-              <li>Angular: Data binding, change detection</li>
-              <li>React: State updates, re-rendering</li>
-              <li>Vue: Reactive data, watchers</li>
-            </ul>
-          </div>
-          <div class="use-case">
-            <h5>📊 Streaming de Dados</h5>
-            <p>Processamento de dados em tempo real, como feeds de redes sociais ou dados de sensores.</p>
-            <ul>
-              <li>Twitter feeds</li>
-              <li>Dados de IoT</li>
-              <li>Análise de mercado</li>
-            </ul>
-          </div>
+          <pre><code>// Interface Observer
+export interface Observer &#123;
+  update(data: any): void;
+&#125;
+
+// Interface Subject
+export interface Subject &#123;
+  addObserver(observer: Observer): void;
+  removeObserver(observer: Observer): void;
+  notifyObservers(data: any): void;
+&#125;
+
+// Subject concreto
+@Injectable(&#123;
+  providedIn: 'root'
+&#125;)
+export class NewsSubjectService implements Subject &#123;
+  private observers: Observer[] = [];
+  private newsList: string[] = [];
+
+  addObserver(observer: Observer): void &#123;
+    this.observers.push(observer);
+  &#125;
+
+  removeObserver(observer: Observer): void &#123;
+    const index = this.observers.indexOf(observer);
+    if (index > -1) &#123;
+      this.observers.splice(index, 1);
+    &#125;
+  &#125;
+
+  notifyObservers(news: string): void &#123;
+    this.observers.forEach(observer => &#123;
+      observer.update(news);
+    &#125;);
+  &#125;
+
+  addNews(news: string): void &#123;
+    this.newsList.push(news);
+    this.notifyObservers(news);
+  &#125;
+&#125;
+
+// Observer concreto
+export class NewsObserverService implements Observer &#123;
+  constructor(private name: string) &#123;&#125;
+
+  update(news: string): void &#123;
+    console.log(this.name + ' recebeu: ' + news);
+  &#125;
+&#125;</code></pre>
         </div>
       </div>
       
-      <div class="angular-specific">
-        <h4>⚡ Observer Pattern no Angular</h4>
-        <div class="angular-examples">
-          <div class="angular-example">
-            <h5>🔄 RxJS Observables</h5>
-            <p>O Angular usa extensivamente o Observer Pattern através do RxJS:</p>
-            <ul>
-              <li><strong>HTTP Requests:</strong> HttpClient retorna Observables</li>
-              <li><strong>Forms:</strong> FormControl.valueChanges</li>
-              <li><strong>Router:</strong> Router.events</li>
-              <li><strong>Custom Events:</strong> EventEmitter, Subject</li>
-            </ul>
-          </div>
-          <div class="angular-example">
-            <h5>🎯 Change Detection</h5>
-            <p>O sistema de detecção de mudanças do Angular é baseado no Observer Pattern:</p>
-            <ul>
-              <li>Zonas (Zones) observam mudanças</li>
-              <li>Componentes são notificados</li>
-              <li>View é atualizada automaticamente</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="best-practices">
-        <h4>✅ Melhores Práticas</h4>
-        <div class="practices-grid">
-          <div class="practice">
-            <h5>🎯 Design</h5>
-            <ul>
-              <li>Use interfaces para desacoplar Subject e Observer</li>
-              <li>Implemente métodos para adicionar/remover observadores</li>
-              <li>Considere usar WeakMap para evitar memory leaks</li>
-              <li>Documente claramente o contrato de notificação</li>
-            </ul>
-          </div>
-          <div class="practice">
-            <h5>⚡ Performance</h5>
-            <ul>
-              <li>Evite notificações desnecessárias</li>
-              <li>Use debounce/throttle quando apropriado</li>
-              <li>Considere lazy loading de observadores</li>
-              <li>Implemente batching para múltiplas mudanças</li>
-            </ul>
-          </div>
-          <div class="practice">
-            <h5>🐛 Debugging</h5>
-            <ul>
-              <li>Adicione logging para notificações</li>
-              <li>Use ferramentas de debugging do RxJS</li>
-              <li>Implemente métricas de performance</li>
-              <li>Teste cenários de falha</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="alternatives">
-        <h4>🔄 Alternativas e Variações</h4>
-        <div class="alternatives-grid">
-          <div class="alternative">
-            <h5>📡 Publish-Subscribe (Pub/Sub)</h5>
-            <p>Variação onde Subject e Observer não se conhecem diretamente, usando um broker intermediário.</p>
-          </div>
-          <div class="alternative">
-            <h5>🎪 Event Bus</h5>
-            <p>Padrão global para comunicação entre componentes distantes na hierarquia.</p>
-          </div>
-          <div class="alternative">
-            <h5>🔄 Reactive Programming</h5>
-            <p>Paradigma que estende o Observer Pattern com operadores funcionais (RxJS, ReactiveX).</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

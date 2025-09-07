@@ -1,1 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Import shared styles for design patterns */
+@import './app/shared/styles/shared-styles.css';
